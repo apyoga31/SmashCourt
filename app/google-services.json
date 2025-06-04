@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "412331745761",
+    "project_id": "smash-court",
+    "storage_bucket": "smash-court.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:412331745761:android:459d993c1ef23f980db2a0",
+        "android_client_info": {
+          "package_name": "com.agung.smashcourt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnYdO3uWx7D0lgLcbCoEavqmDDVtLF5RM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
