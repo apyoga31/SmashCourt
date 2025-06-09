@@ -7,7 +7,7 @@ import com.agung.smashcourt.databinding.ItemCourtBinding
 
 class CourtAdapter(
     private val court: List<Court>,
-    private val onItemClick: (Court) -> Unit
+    private val onItemClick: (Court, Int) -> Unit
 ) : RecyclerView.Adapter<CourtAdapter.CourtViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourtViewHolder {
@@ -21,9 +21,9 @@ class CourtAdapter(
             tvTitle.text = item.name
             ivCourt.setImageResource(item.image)
 
-            // Handle klik item
+            // ✅ Kirim item + posisi saat diklik
             root.setOnClickListener {
-                onItemClick(item)
+                onItemClick(item, position)
             }
         }
     }

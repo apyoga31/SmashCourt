@@ -4,13 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.agung.smashcourt.databinding.ActivityLoginBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,26 +31,25 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // === Pindah ke MainActivity ===
+        // === Proses login ===
         binding.loginButton.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
+            val email = binding.emailEditText.editText?.text.toString().trim()
+            val password = binding.passwordEditText.editText?.text.toString()
 
-        // Validasi dan aksi tombol
-//        binding.loginButton.setOnClickListener {
-//            val Password = binding.tlPassword.text.toString()
-//            val confirmEmail = binding.tlEmail.text.toString()
-//
-//            if (Password.isEmpty() || confirmEmail.isEmpty()) {
-//                Toast.makeText(this, "Semua kolom harus diisi", Toast.LENGTH_SHORT).show()
-//            } else if (Password != confirmEmail) {
-//                Toast.makeText(this, "Kata sandi tidak cocok", Toast.LENGTH_SHORT).show()
-//            } else {
-//                // TODO: Implementasi logika update password, jika ada API
-//                Toast.makeText(this, "Berhasil Masuk", Toast.LENGTH_SHORT).show()
-//                finish()
-//            }
-//        }
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Email dan password tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Login gagal: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 }

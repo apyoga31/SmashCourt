@@ -3,6 +3,7 @@ package com.agung.smashcourt
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.agung.smashcourt.databinding.ActivityRegisterBinding
@@ -22,15 +23,21 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.registerButton.setOnClickListener {
+        // Siapkan opsi role untuk spinner
+        val roles = listOf("Penyedia", "Pelanggan")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, roles)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.roleSpinner.adapter = adapter
 
-            showToast("Register button clicked")
+        // Tombol daftar ditekan
+        binding.registerButton.setOnClickListener {
 
             val name = binding.tlName.text.toString().trim()
             val email = binding.tlEmail.text.toString().trim()
             val password = binding.tlPassword.text.toString()
             val confirmPassword = binding.tlPasswordNew.text.toString()
             val isTermsChecked = binding.termsCheckbox.isChecked
+            val selectedRole = binding.roleSpinner.selectedItem.toString()
 
             // Validasi input
             if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
@@ -58,16 +65,24 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Proses registrasi Firebase
+            if (selectedRole == "Pilih Peran") {
+                showToast("Silakan pilih peran terlebih dahulu.")
+                return@setOnClickListener
+            }
+
+            // Registrasi dengan Firebase Authentication
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener { result ->
-                    val userId = result.user?.uid
+                    val userId = result.user?.uid ?: return@addOnSuccessListener
+
+                    // Simpan data pengguna ke Firestore
                     val userMap = hashMapOf(
                         "name" to name,
-                        "email" to email
+                        "email" to email,
+                        "role" to selectedRole
                     )
 
-                    db.collection("users").document(userId ?: "")
+                    db.collection("users").document(userId)
                         .set(userMap)
                         .addOnSuccessListener {
                             showToast("Registrasi berhasil.")
@@ -75,7 +90,7 @@ class RegisterActivity : AppCompatActivity() {
                             finish()
                         }
                         .addOnFailureListener {
-                            showToast("Gagal simpan data: ${it.message}")
+                            showToast("Gagal menyimpan data: ${it.message}")
                         }
                 }
                 .addOnFailureListener {

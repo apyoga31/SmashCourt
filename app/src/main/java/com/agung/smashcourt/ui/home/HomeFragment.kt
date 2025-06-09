@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.agung.smashcourt.BookingActivity
-import com.agung.smashcourt.Court
 import com.agung.smashcourt.CourtAdapter
+import com.agung.smashcourt.ItemBarangActivity
 import com.agung.smashcourt.courts
 import com.agung.smashcourt.databinding.FragmentHomeBinding
 
@@ -26,11 +26,17 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val adapter = CourtAdapter(courts) { selectedCourt ->
-            val intent = Intent(requireContext(), BookingActivity::class.java)
-            intent.putExtra("court_name", selectedCourt.name)
+        val adapter = CourtAdapter(courts) { selectedCourt, position ->
+            val intent = if (position == 5) {
+                Intent(requireContext(), ItemBarangActivity::class.java)
+            } else {
+                Intent(requireContext(), BookingActivity::class.java).apply {
+                    putExtra("court_name", selectedCourt.name)
+                }
+            }
             startActivity(intent)
         }
+
 
         binding.rvCourt.layoutManager = LinearLayoutManager(requireContext())
         binding.rvCourt.adapter = adapter

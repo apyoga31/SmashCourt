@@ -2,17 +2,18 @@ package com.agung.smashcourt
 
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.widget.Button
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import android.widget.Button
-import android.widget.TextView
 
 class CheckOutActivity : AppCompatActivity() {
 
     private lateinit var countdownText: TextView
     private lateinit var addToCartButton: Button
+    private lateinit var countdownTimer: TextView
 
     private val bookingDurationMillis = 15 * 60 * 1000L // 15 menit
 
@@ -29,6 +30,7 @@ class CheckOutActivity : AppCompatActivity() {
 
         countdownText = findViewById(R.id.countdownText)
         addToCartButton = findViewById(R.id.addToCartButton)
+        countdownTimer = findViewById(R.id.countdownTimer)
 
         // ✅ Ambil data dari intent (dari BookingActivity)
         val selectedTime = intent.getStringExtra("SELECTED_TIME") ?: "-"
@@ -50,7 +52,7 @@ class CheckOutActivity : AppCompatActivity() {
             override fun onTick(millisUntilFinished: Long) {
                 val minutes = (millisUntilFinished / 1000) / 60
                 val seconds = (millisUntilFinished / 1000) % 60
-                countdownText.text = String.format("Lakukan transaksi dalam %02d:%02d", minutes, seconds)
+                countdownTimer.text = String.format(getString(R.string.timer), minutes, seconds)
             }
 
             override fun onFinish() {
@@ -60,3 +62,4 @@ class CheckOutActivity : AppCompatActivity() {
         }.start()
     }
 }
+

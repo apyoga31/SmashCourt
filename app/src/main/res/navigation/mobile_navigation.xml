@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/navigation_calendar"
         android:name="com.agung.smashcourt.ui.calendar.CalendarFragment"
-        android:label="@string/title_calendar"
+        android:label="@string/title_pesanan"
         tools:layout="@layout/fragment_calendar" />
 
     <fragment

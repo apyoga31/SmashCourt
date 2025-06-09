@@ -12,13 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import com.agung.smashcourt.R
 
 class BookingActivity : AppCompatActivity() {
 
     private lateinit var chipGroup: ChipGroup
     private lateinit var rvDates: RecyclerView
     private lateinit var btnPesan: Button
+
+    private var selectedDate: String = "Juni 2025" // ✅ default jika user belum memilih tanggal
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +32,10 @@ class BookingActivity : AppCompatActivity() {
             insets
         }
 
-        // Inisialisasi view
         chipGroup = findViewById(R.id.chipGroupWaktu)
         rvDates = findViewById(R.id.rvDates)
         btnPesan = findViewById(R.id.btnPesan)
 
-        // Daftar tanggal
         val tanggalList = listOf(
             "09 Juni" to "SEN",
             "10 Juni" to "SEL",
@@ -47,11 +46,12 @@ class BookingActivity : AppCompatActivity() {
             "15 Juni" to "MIN",
         )
 
-        // Setup tanggal RecyclerView
         rvDates.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rvDates.adapter = DateAdapter(tanggalList)
+        rvDates.adapter = DateAdapter(tanggalList) { selected ->
+            selectedDate = "$selected 2025"
+            Toast.makeText(this, "Tanggal terpilih: $selectedDate", Toast.LENGTH_SHORT).show()
+        }
 
-        // Slot waktu (dummy)
         val timeSlots = listOf(
             "06:00-07:00", "08:00-09:00", "10:00-11:00",
             "13:00-14:00", "15:00-16:00", "17:00-18:00",
@@ -62,14 +62,14 @@ class BookingActivity : AppCompatActivity() {
 
         btnPesan.setOnClickListener {
             val selectedChipId = chipGroup.checkedChipId
-            if (selectedChipId != -1) {
+            if (selectedChipId != -1 && selectedDate != null) {
                 val selectedChip = findViewById<Chip>(selectedChipId)
-                Toast.makeText(this, "Booking jam: ${selectedChip.text}", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, CheckOutActivity::class.java)
                 intent.putExtra("SELECTED_TIME", selectedChip.text.toString())
+                intent.putExtra("SELECTED_DATE", selectedDate)
                 startActivity(intent)
             } else {
-                Toast.makeText(this, "Silakan pilih jam terlebih dahulu", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Pilih tanggal & jam terlebih dahulu", Toast.LENGTH_SHORT).show()
             }
         }
     }

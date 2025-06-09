@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.agung.smashcourt.AdapterOrder
 import com.agung.smashcourt.databinding.FragmentCalendarBinding
+import com.agung.smashcourt.order
 
 class CalendarFragment : Fragment() {
 
@@ -28,10 +30,10 @@ class CalendarFragment : Fragment() {
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textCalendar
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        val adapter = AdapterOrder(order)
+        binding.recyclerViewOrder.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewOrder.adapter = adapter
+
         return root
     }
 

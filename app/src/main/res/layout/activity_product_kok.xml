@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".ProductKokActivity">
+
+    <ImageButton
+        android:id="@+id/buttonclose"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Tutup"
+        android:src="@drawable/close"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <!-- Gambar Raket -->
+    <ImageView
+        android:id="@+id/imagekok"
+        android:layout_width="match_parent"
+        android:layout_height="370dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/kok"
+        android:scaleType="fitCenter"
+        app:layout_constraintTop_toBottomOf="@id/buttonclose"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Dots Indicator (manual 5 bulatan, aktif warna hijau) -->
+    <LinearLayout
+        android:id="@+id/dotsindicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/imagekok"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center">
+
+        <!-- Dot aktif -->
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/bldot" />
+
+        <!-- Dot nonaktif -->
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/dot" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/bldot" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/bldot" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/bldot" />
+    </LinearLayout>
+
+    <!-- Nama dan Harga -->
+    <TextView
+        android:id="@+id/text_nama"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shuttlecock "
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/dotsindicator"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="32dp" />
+
+    <TextView
+        android:id="@+id/text_deskripsi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Kok bulu tangkis berkualitas tinggi, terbuat dari bulu angsa asli dan alas gabus padat untuk daya tahan dan stabilitas maksimal saat dimainkan. "
+        android:textSize="13sp"
+        android:textColor="#000000"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="32dp"
+        android:justificationMode="inter_word"
+        android:layout_marginStart="32dp"
+        app:layout_constraintTop_toBottomOf="@id/text_harga"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:lineSpacingExtra="4dp" />
+
+    <TextView
+        android:id="@+id/text_harga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rp 8.500"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/text_nama"
+        app:layout_constraintStart_toStartOf="@id/text_nama" />
+
+    <!-- Counter -->
+    <LinearLayout
+        android:id="@+id/counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_nama">
+
+        <ImageButton
+            android:id="@+id/button_minus"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/bgcounter"
+            android:contentDescription="Kurang"
+            android:src="@drawable/minus"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/text_quantity"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="14sp" />
+
+        <ImageButton
+            android:id="@+id/button_plus"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/bgcounter"
+            android:contentDescription="Tambah"
+            android:src="@drawable/add"
+            tools:ignore="TouchTargetSizeCheck" />
+    </LinearLayout>
+
+    <!-- Tombol Tambah ke Keranjang -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_keranjang"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_margin="16dp"
+        android:text="+ Tambah ke Keranjang"
+        android:backgroundTint="#000000"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        app:cornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
