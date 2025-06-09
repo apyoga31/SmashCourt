@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".RepassActivity">
+
+    <TextView
+        android:id="@+id/subtitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="94dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Masukan Kata Sandi baru"
+        android:textColor="@color/md_theme_scrim"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appTitle" />
+
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Smash Court App"
+        android:textColor="@color/md_theme_scrim"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/passwordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="160dp"
+        android:fontFamily="@font/inter_extrabold"
+        android:text="Kata Sandi"
+        android:textColor="@color/md_theme_scrim"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appTitle" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordEditText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Kata Sandi"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:endIconMode="password_toggle"
+        app:boxStrokeColor="@color/gray"
+        android:textColorHint="@color/gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/passwordText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tl_password"
+            android:layout_width="327dp"
+            android:layout_height="48dp"
+            android:inputType="textPassword"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordEditText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Konfirmasi Kata Sandi"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        android:layout_marginTop="8dp"
+        app:boxStrokeColor="@color/gray"
+        android:textColorHint="@color/gray"
+        app:endIconMode="password_toggle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/passwordEditText1"
+        tools:ignore="TextSizeCheck" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tl_password_new"
+            android:layout_width="327dp"
+            android:layout_height="48dp"
+            android:inputType="textPassword"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/resetPasswordButton"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="327dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#000000"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Ganti Kata Sandi"
+        android:textColor="@android:color/white"
+        app:cornerRadius="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/passwordEditText2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
