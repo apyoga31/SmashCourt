@@ -5,17 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.agung.smashcourt.AdapterItem
-import com.agung.smashcourt.databinding.FragmentOrdersBinding
-import com.agung.smashcourt.order
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.Timestamp
-import com.google.firebase.auth.FirebaseAuth
 import com.agung.smashcourt.CartItem
 import com.agung.smashcourt.R
+import com.agung.smashcourt.databinding.FragmentOrdersBinding
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 
 class OrdersFragment : Fragment() {
     private var _binding: FragmentOrdersBinding? = null
@@ -54,19 +52,21 @@ class OrdersFragment : Fragment() {
                 if (error != null || snapshot == null) return@addSnapshotListener
                 orderItems.clear()
                 for (doc in snapshot.documents) {
-                    val courtName = doc.getString("orderName") ?: "Lapangan"
+                    val courtName = doc.getString("courtName") ?: "Lapangan"
                     val price = doc.getLong("price")?.toInt() ?: 0
                     val type = doc.getString("type") ?: "sewa lapangan"
                     val timestamp = doc.getTimestamp("date")
                     val (dateStr, timeStr, desc) = formatDateTimeDesc(timestamp)
+                    val image = doc.getString("imageName")
+
                     orderItems.add(
                         CartItem(
-                            R.drawable.court2,
-                            courtName,
-                            desc,
-                            dateStr,
-                            timeStr,
-                            "RP. " + price.toString().replace("\\B(?=(\\d{3})+(?!\\d))".toRegex(), ".")
+                            imageResId = R.drawable.court,
+                            courtName = courtName,
+                            description = desc,
+                            date = dateStr,
+                            time = timeStr,
+                            price = "RP. " + price.toString().replace("\\B(?=(\\d{3})+(?!\\d))".toRegex(), ".")
                         )
                     )
                 }

@@ -1,6 +1,8 @@
 package com.agung.smashcourt
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.agung.smashcourt.databinding.ItemCartBinding
@@ -16,15 +18,31 @@ class AdapterItem(private val item: List<CartItem>) :
         return ViewHolder(binding)
     }
 
+    @SuppressLint("DiscouragedApi")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = item[position]
         with(holder.binding) {
             image.setImageResource(item.imageResId)
-            court.text = item.courtName
-            deskripsi.text = item.description
-            date.text = item.date
-            time.text = item.time
             cost.text = item.price
+
+            if (item.courtName.isNullOrBlank()) {
+                deskripsi.visibility = View.GONE
+                date.visibility = View.GONE
+                time.visibility = View.GONE
+
+                court.text = item.itemName
+                quantity.text = "Jumlah: ${item.quantity}"
+                quantity.visibility = View.VISIBLE
+            } else if (item.itemName.isNullOrBlank()) {
+                quantity.visibility = View.GONE
+
+                court.text = item.courtName
+                deskripsi.text = item.description
+                date.text = item.date
+                time.text = item.time
+            } else {
+                false
+            }
         }
     }
 

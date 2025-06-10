@@ -6,17 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.agung.smashcourt.AdapterOrder
 import com.agung.smashcourt.databinding.FragmentCalendarBinding
-import com.agung.smashcourt.order
 
 class CalendarFragment : Fragment() {
 
     private var _binding: FragmentCalendarBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -24,17 +18,27 @@ class CalendarFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
+        val calendarViewModel =
             ViewModelProvider(this).get(CalendarViewModel::class.java)
 
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val adapter = AdapterOrder(order)
-        binding.recyclerViewOrder.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerViewOrder.adapter = adapter
+//        val adapter = AdapterOrder(order)
+//        binding.recyclerViewOrder.layoutManager = LinearLayoutManager(requireContext())
+//        binding.recyclerViewOrder.adapter = adapter
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Fungsi tombol back
+        binding.topAppBar.setNavigationOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
     }
 
     override fun onDestroyView() {

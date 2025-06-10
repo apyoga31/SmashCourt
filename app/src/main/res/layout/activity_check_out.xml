@@ -47,6 +47,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
+        android:minHeight="48dp"
         android:orientation="horizontal"
         android:paddingVertical="12dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,21 +64,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/paymentRow" />
 
-        <TextView
-            android:id="@+id/paymentLabelQris"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/inter"
-            android:text="QRIS"
-            android:textSize="15sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="Next"
-            android:src="@drawable/chevron_right_24"
-            app:tint="@color/md_theme_scrim" />
     </LinearLayout>
 
     <!-- Divider -->
