@@ -107,7 +107,7 @@
         android:textColor="@android:color/white"
         android:fontFamily="@font/inter_semibold"
         android:textAllCaps="true"
-        app:layout_constraintTop_toBottomOf="@id/forgotPassword"
+        app:layout_constraintTop_toBottomOf="@id/passwordEditText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />

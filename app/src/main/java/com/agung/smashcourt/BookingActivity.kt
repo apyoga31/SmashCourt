@@ -2,87 +2,85 @@ package com.agung.smashcourt
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.agung.smashcourt.databinding.ActivityBookingBinding
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class BookingActivity : AppCompatActivity() {
 
-    private lateinit var chipGroup: ChipGroup
-    private lateinit var rvDates: RecyclerView
-    private lateinit var btnPesan: Button
-
-    private var selectedDate: String = "Juni 2025" // ✅ default jika user belum memilih tanggal
+    private lateinit var binding: ActivityBookingBinding
+    private var selectedDate: String = "Juni 2025"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_booking)
+        binding = ActivityBookingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        binding.buttonBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
 
-        chipGroup = findViewById(R.id.chipGroupWaktu)
-        rvDates = findViewById(R.id.rvDates)
-        btnPesan = findViewById(R.id.btnPesan)
+        setupDateRecycler()
+        setupTimeChips()
+        setupButtonListener()
+    }
 
-        val tanggalList = listOf(
-            "09 Juni" to "SEN",
-            "10 Juni" to "SEL",
-            "11 Juni" to "RAB",
-            "12 Juni" to "KAM",
-            "13 Juni" to "JUM",
-            "14 Juni" to "SAB",
-            "15 Juni" to "MIN",
-        )
-
-        rvDates.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rvDates.adapter = DateAdapter(tanggalList) { selected ->
-            selectedDate = "$selected 2025"
-            Toast.makeText(this, "Tanggal terpilih: $selectedDate", Toast.LENGTH_SHORT).show()
+    private fun setupDateRecycler() {
+        val hariList = listOf("MIN", "SEN", "SEL", "RAB", "KAM", "JUM", "SAB")
+        val calendar = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 1) }
+        val dateFormat = SimpleDateFormat("dd MMMM", Locale("id", "ID"))
+        val tanggalList = List(7) {
+            val tanggal = dateFormat.format(calendar.time)
+            val hari = hariList[calendar.get(Calendar.DAY_OF_WEEK) - 1]
+            calendar.add(Calendar.DAY_OF_YEAR, 1)
+            tanggal to hari
         }
 
-        val timeSlots = listOf(
-            "06:00-07:00", "08:00-09:00", "10:00-11:00",
-            "13:00-14:00", "15:00-16:00", "17:00-18:00",
-            "19:00-20:00", "21:00-22:00"
-        )
-
-        populateChipGroup(timeSlots)
-
-        btnPesan.setOnClickListener {
-            val selectedChipId = chipGroup.checkedChipId
-            if (selectedChipId != -1 && selectedDate != null) {
-                val selectedChip = findViewById<Chip>(selectedChipId)
-                val intent = Intent(this, CheckOutActivity::class.java)
-                intent.putExtra("SELECTED_TIME", selectedChip.text.toString())
-                intent.putExtra("SELECTED_DATE", selectedDate)
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "Pilih tanggal & jam terlebih dahulu", Toast.LENGTH_SHORT).show()
+        binding.rvDates.apply {
+            layoutManager = LinearLayoutManager(this@BookingActivity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = DateAdapter(tanggalList) { selected ->
+                selectedDate = "$selected 2025"
+                Toast.makeText(context, "Tanggal terpilih: $selectedDate", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun populateChipGroup(timeSlots: List<String>) {
-        chipGroup.removeAllViews()
-        for (slot in timeSlots) {
-            val chip = Chip(this).apply {
-                text = slot
-                isCheckable = true
-                isClickable = true
+    private fun setupTimeChips() {
+        val timeSlots = (6..21).map { hour ->
+            String.format("%02d:00-%02d:00", hour, hour + 1)
+        }
+
+        binding.chipGroupWaktu.apply {
+            removeAllViews()
+            timeSlots.forEach { slot ->
+                addView(Chip(context).apply {
+                    text = slot
+                    isCheckable = true
+                    isClickable = true
+                })
             }
-            chipGroup.addView(chip)
+        }
+    }
+
+    private fun setupButtonListener() {
+        binding.btnPesan.setOnClickListener {
+            val selectedChipId = binding.chipGroupWaktu.checkedChipId
+            if (selectedChipId != -1) {
+                val selectedChip = findViewById<Chip>(selectedChipId)
+                val orderName = intent.getStringExtra("court_name") ?: "-"
+                startActivity(Intent(this, CheckOutActivity::class.java).apply {
+                    putExtra("SELECTED_TIME", selectedChip.text.toString())
+                    putExtra("SELECTED_DATE", selectedDate)
+                    putExtra("COURT_NAME", orderName)
+                })
+            } else {
+                Toast.makeText(this, "Pilih tanggal & jam terlebih dahulu", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

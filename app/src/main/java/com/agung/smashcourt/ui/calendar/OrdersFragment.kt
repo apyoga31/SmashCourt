@@ -1,4 +1,4 @@
-package com.agung.smashcourt.ui.cart
+package com.agung.smashcourt.ui.calendar
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,20 +9,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.agung.smashcourt.AdapterItem
 import com.agung.smashcourt.CartItem
 import com.agung.smashcourt.R
-import com.agung.smashcourt.databinding.FragmentCartBinding
+import com.agung.smashcourt.databinding.FragmentOrdersBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 
-class CartFragment : Fragment() {
-
-    private var _binding: FragmentCartBinding? = null
+class OrdersFragment : Fragment() {
+    private var _binding: FragmentOrdersBinding? = null
     private val binding get() = _binding!!
-
     private var orderListener: ListenerRegistration? = null
     private val firestore = FirebaseFirestore.getInstance()
-    private val cartItems = mutableListOf<CartItem>()
+    private val orderItems = mutableListOf<CartItem>()
     private lateinit var adapter: AdapterItem
 
     override fun onCreateView(
@@ -30,81 +28,73 @@ class CartFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCartBinding.inflate(inflater, container, false)
+        _binding = FragmentOrdersBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        adapter = AdapterItem(cartItems)
-        binding.recyclerViewCart.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerViewCart.adapter = adapter
+        adapter = AdapterItem(orderItems)
+        binding.recyclerViewOrder.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewOrder.adapter = adapter
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (userId != null) {
-            listenToOrders(userId)
+            listenToPaidOrders(userId)
         }
 
         return root
     }
 
-    private fun listenToOrders(userId: String) {
+    private fun listenToPaidOrders(userId: String) {
         orderListener?.remove()
         orderListener = firestore.collection("users").document(userId).collection("orders")
-            .whereEqualTo("isPay", false)
+            .whereEqualTo("isPay", true)
             .addSnapshotListener { snapshot, error ->
                 if (error != null || snapshot == null) return@addSnapshotListener
 
-                cartItems.clear()
-                var total = 0
+                orderItems.clear()
+                var totalPrice = 0
 
-                for ( doc in snapshot.documents) {
-                    val type = doc.getString("type") ?: "sewa lapangan"
+                for (doc in snapshot.documents) {
+                    val type = doc.getString("type") ?: continue
+                    val price = doc.getLong("price")?.toInt() ?: 0
+                    val timestamp = doc.getTimestamp("date")
+                    val (dateStr, timeStr, desc) = formatDateTimeDesc(timestamp)
 
                     when (type) {
                         "sewa lapangan" -> {
                             val orderName = doc.getString("orderName") ?: "Lapangan"
-                            val price = doc.getLong("price")?.toInt() ?: 0
-                            val timestamp = doc.getTimestamp("date")
-                            val (dateStr, timeStr, desc) = formatDateTimeDesc(timestamp)
-
-                            cartItems.add(
+                            orderItems.add(
                                 CartItem(
                                     imageResId = R.drawable.court2,
                                     orderName = orderName,
                                     description = desc,
+                                    quantity = "1",
                                     date = dateStr,
                                     time = timeStr,
-                                    price = "RP. " + price.toString().replace("\\B(?=(\\d{3})+(?!\\d))".toRegex(), ".")
+                                    price = "RP. ${price.formatRupiah()}"
                                 )
                             )
-                            total += price
                         }
-
                         "sewa alat" -> {
-                            val itemName = doc.getString("itemName") ?: "Sewa Raket"
-                            val price = doc.getLong("price")?.toInt() ?: 0
+                            val itemName = doc.getString("itemName") ?: "Sewa alat"
                             val quantity = doc.getLong("quantity")?.toInt() ?: 1
-
-                            cartItems.add(
+                            orderItems.add(
                                 CartItem(
                                     imageResId = R.drawable.raket,
                                     itemName = itemName,
                                     quantity = quantity.toString(),
-                                    price = "RP. " + price.toString().replace("\\B(?=(\\d{3})+(?!\\d))".toRegex(), ".")
+                                    price = "RP. ${price.formatRupiah()}"
                                 )
                             )
-                            total += price
-                        }
-
-                        else -> {
-                            false
                         }
                     }
+
+                    totalPrice += price
                 }
 
+                binding.textTotalPrice.text = "Total: RP. ${totalPrice.formatRupiah()}"
                 adapter.notifyDataSetChanged()
-                binding.textTotalPrice.text = "RP. " + total.toString().replace("\\B(?=(\\d{3})+(?!\\d))".toRegex(), ".")
             }
     }
-
 
     private fun formatDateTimeDesc(timestamp: Timestamp?): Triple<String, String, String> {
         if (timestamp == null) return Triple("-", "-", "-")
@@ -125,26 +115,13 @@ class CartFragment : Fragment() {
         return Triple("$hari, $tgl", timeStr, desc)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.topAppBar.setNavigationOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
-        }
-
-        binding.buttonBayar.setOnClickListener {
-            val userId = FirebaseAuth.getInstance().currentUser?.uid
-            if (userId != null) {
-                val url = "https://smash-pay.vercel.app/?userId=$userId"
-                val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(url))
-                startActivity(intent)
-            }
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         orderListener?.remove()
         _binding = null
+    }
+
+    private fun Int.formatRupiah(): String {
+        return this.toString().replace("\\B(?=(\\d{3})+(?!\\d))".toRegex(), ".")
     }
 }

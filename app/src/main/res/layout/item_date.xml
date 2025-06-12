@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_small"
-    android:orientation="vertical"
-    android:padding="12dp">
+    app:cardCornerRadius="8dp"
+    app:strokeWidth="2dp"
+    app:strokeColor="@android:color/darker_gray">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:padding="@dimen/margin_small">
 
         <TextView
             android:id="@+id/tvTanggal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/margin_small"
-            android:text="25 Nov"
+            android:text="11 Juni"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tvHari"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SEN"
-            android:paddingStart="@dimen/margin_small"
+            android:text="RAB"
             android:textColor="@android:color/black"
+            android:textSize="14sp"
             app:layout_constraintTop_toBottomOf="@id/tvTanggal"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

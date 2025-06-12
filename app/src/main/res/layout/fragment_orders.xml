@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.cart.CartFragment">
+    tools:context=".ui.calendar.OrdersFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -21,12 +21,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        app:navigationIcon="@drawable/arrow_back_ios_24dp"
-        app:title="Keranjang"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/arrow_back_ios_24dp"
+        app:title="Pesanan selesai"
         app:titleCentered="true" />
+
+    <!-- Label Header Kolom -->
+
+    <!-- LabelDeskripsi dikaitkan ke paymentLabel -->
+
+    <!-- LabelPrice dikaitkan ke paymentLabel -->
+
+    <!-- RecyclerView diperbaiki constraint-nya -->
 
     <TextView
         android:id="@+id/paymentLabel"
@@ -39,7 +47,7 @@
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topAppBar"/>
+        app:layout_constraintTop_toBottomOf="@+id/topAppBar" />
 
     <TextView
         android:id="@+id/LabelDeskripsi"
@@ -68,27 +76,14 @@
         app:layout_constraintTop_toBottomOf="@+id/topAppBar" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewCart"
+        android:id="@+id/recyclerViewOrder"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingTop="8dp"
-        app:layout_constraintBottom_toTopOf="@id/text_timer"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/paymentLabel" />
-
-    <TextView
-        android:id="@+id/text_timer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Lakukan transaksi dalam 00:08:59"
-        android:textColor="#999999"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@id/text_total"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyclerViewCart" />
+        app:layout_constraintTop_toBottomOf="@+id/LabelDeskripsi" />
 
     <TextView
         android:id="@+id/text_total"
@@ -99,8 +94,8 @@
         android:textAlignment="textEnd"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/button_bayar"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerViewOrder"/>
 
     <TextView
         android:id="@+id/text_total_price"
@@ -111,25 +106,8 @@
         android:textAlignment="textEnd"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/button_bayar"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_bayar"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_margin="16dp"
-        android:backgroundTint="#000000"
-        android:fontFamily="@font/inter_medium"
-        android:text="Bayar"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        app:cornerRadius="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerViewOrder"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
