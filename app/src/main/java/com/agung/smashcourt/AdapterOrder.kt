@@ -20,8 +20,9 @@ class AdapterOrder(private val order: List<OrderItem>) :
         val item = order[position]
         with(holder.binding) {
             image.setImageResource(item.imageResId)
-            court.text = item.courtName
+            court.text = item.orderName
             deskripsi.text = item.description
+            quantity.text = item.quantity
             date.text = item.date
             time.text = item.time
             cost.text = item.price

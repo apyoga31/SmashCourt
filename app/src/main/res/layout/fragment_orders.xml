@@ -16,6 +16,18 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/arrow_back_ios_24dp"
+        app:title="Pesanan selesai"
+        app:titleCentered="true" />
+
     <!-- Label Header Kolom -->
 
     <!-- LabelDeskripsi dikaitkan ke paymentLabel -->
@@ -41,7 +53,7 @@
         android:id="@+id/LabelDeskripsi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
+        android:layout_marginStart="76dp"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/inter_bold"
         android:text="DESCRIPTION"
@@ -97,16 +109,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerViewOrder"/>
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/topAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/arrow_back_ios_24dp"
-        app:title="Pesanan selesai"
-        app:titleCentered="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

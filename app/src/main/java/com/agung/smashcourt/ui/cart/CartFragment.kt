@@ -60,15 +60,15 @@ class CartFragment : Fragment() {
 
                     when (type) {
                         "sewa lapangan" -> {
-                            val courtName = doc.getString("courtName") ?: "Lapangan"
+                            val orderName = doc.getString("orderName") ?: "Lapangan"
                             val price = doc.getLong("price")?.toInt() ?: 0
                             val timestamp = doc.getTimestamp("date")
                             val (dateStr, timeStr, desc) = formatDateTimeDesc(timestamp)
 
                             cartItems.add(
                                 CartItem(
-                                    imageResId = R.drawable.court,
-                                    courtName = courtName,
+                                    imageResId = R.drawable.court2,
+                                    orderName = orderName,
                                     description = desc,
                                     date = dateStr,
                                     time = timeStr,
@@ -79,14 +79,14 @@ class CartFragment : Fragment() {
                         }
 
                         "sewa alat" -> {
-                            val orderName = doc.getString("itemName") ?: "Sewa Raket"
+                            val itemName = doc.getString("itemName") ?: "Sewa Raket"
                             val price = doc.getLong("price")?.toInt() ?: 0
                             val quantity = doc.getLong("quantity")?.toInt() ?: 1
 
                             cartItems.add(
                                 CartItem(
                                     imageResId = R.drawable.raket,
-                                    itemName = orderName,
+                                    itemName = itemName,
                                     quantity = quantity.toString(),
                                     price = "RP. " + price.toString().replace("\\B(?=(\\d{3})+(?!\\d))".toRegex(), ".")
                                 )

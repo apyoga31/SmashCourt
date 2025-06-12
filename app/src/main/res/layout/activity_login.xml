@@ -86,17 +86,17 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/forgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:text="Lupa sandi?"
-        android:textColor="#A10F1C"
-        android:textSize="12sp"
-        app:layout_constraintTop_toBottomOf="@id/passwordEditText"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="4dp" />
+<!--    <TextView-->
+<!--        android:id="@+id/forgotPassword"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="12dp"-->
+<!--        android:text="Lupa sandi?"-->
+<!--        android:textColor="#A10F1C"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/passwordEditText"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        android:layout_marginTop="4dp" />-->
 
     <Button
         android:id="@+id/loginButton"
@@ -107,7 +107,7 @@
         android:textColor="@android:color/white"
         android:fontFamily="@font/inter_semibold"
         android:textAllCaps="true"
-        app:layout_constraintTop_toBottomOf="@id/forgotPassword"
+        app:layout_constraintTop_toBottomOf="@id/passwordEditText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />

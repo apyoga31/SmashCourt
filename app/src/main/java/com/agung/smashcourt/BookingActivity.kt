@@ -72,11 +72,11 @@ class BookingActivity : AppCompatActivity() {
             val selectedChipId = binding.chipGroupWaktu.checkedChipId
             if (selectedChipId != -1) {
                 val selectedChip = findViewById<Chip>(selectedChipId)
-                val courtName = intent.getStringExtra("court_name") ?: "-"
+                val orderName = intent.getStringExtra("court_name") ?: "-"
                 startActivity(Intent(this, CheckOutActivity::class.java).apply {
                     putExtra("SELECTED_TIME", selectedChip.text.toString())
                     putExtra("SELECTED_DATE", selectedDate)
-                    putExtra("COURT_NAME", courtName)
+                    putExtra("COURT_NAME", orderName)
                 })
             } else {
                 Toast.makeText(this, "Pilih tanggal & jam terlebih dahulu", Toast.LENGTH_SHORT).show()

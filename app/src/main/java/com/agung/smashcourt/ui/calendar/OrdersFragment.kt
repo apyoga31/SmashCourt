@@ -35,7 +35,6 @@ class OrdersFragment : Fragment() {
         binding.recyclerViewOrder.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewOrder.adapter = adapter
 
-        // Ambil userId dari FirebaseAuth dan ambil data dari Firestore
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (userId != null) {
             listenToPaidOrders(userId)
@@ -50,26 +49,49 @@ class OrdersFragment : Fragment() {
             .whereEqualTo("isPay", true)
             .addSnapshotListener { snapshot, error ->
                 if (error != null || snapshot == null) return@addSnapshotListener
+
                 orderItems.clear()
+                var totalPrice = 0
+
                 for (doc in snapshot.documents) {
-                    val courtName = doc.getString("courtName") ?: "Lapangan"
+                    val type = doc.getString("type") ?: continue
                     val price = doc.getLong("price")?.toInt() ?: 0
-                    val type = doc.getString("type") ?: "sewa lapangan"
                     val timestamp = doc.getTimestamp("date")
                     val (dateStr, timeStr, desc) = formatDateTimeDesc(timestamp)
-                    val image = doc.getString("imageName")
 
-                    orderItems.add(
-                        CartItem(
-                            imageResId = R.drawable.court,
-                            courtName = courtName,
-                            description = desc,
-                            date = dateStr,
-                            time = timeStr,
-                            price = "RP. " + price.toString().replace("\\B(?=(\\d{3})+(?!\\d))".toRegex(), ".")
-                        )
-                    )
+                    when (type) {
+                        "sewa lapangan" -> {
+                            val orderName = doc.getString("orderName") ?: "Lapangan"
+                            orderItems.add(
+                                CartItem(
+                                    imageResId = R.drawable.court2,
+                                    orderName = orderName,
+                                    description = desc,
+                                    quantity = "1",
+                                    date = dateStr,
+                                    time = timeStr,
+                                    price = "RP. ${price.formatRupiah()}"
+                                )
+                            )
+                        }
+                        "sewa alat" -> {
+                            val itemName = doc.getString("itemName") ?: "Sewa alat"
+                            val quantity = doc.getLong("quantity")?.toInt() ?: 1
+                            orderItems.add(
+                                CartItem(
+                                    imageResId = R.drawable.raket,
+                                    itemName = itemName,
+                                    quantity = quantity.toString(),
+                                    price = "RP. ${price.formatRupiah()}"
+                                )
+                            )
+                        }
+                    }
+
+                    totalPrice += price
                 }
+
+                binding.textTotalPrice.text = "Total: RP. ${totalPrice.formatRupiah()}"
                 adapter.notifyDataSetChanged()
             }
     }
@@ -97,5 +119,9 @@ class OrdersFragment : Fragment() {
         super.onDestroyView()
         orderListener?.remove()
         _binding = null
+    }
+
+    private fun Int.formatRupiah(): String {
+        return this.toString().replace("\\B(?=(\\d{3})+(?!\\d))".toRegex(), ".")
     }
 }

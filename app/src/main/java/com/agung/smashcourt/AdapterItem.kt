@@ -25,7 +25,7 @@ class AdapterItem(private val item: List<CartItem>) :
             image.setImageResource(item.imageResId)
             cost.text = item.price
 
-            if (item.courtName.isNullOrBlank()) {
+            if (item.orderName.isNullOrBlank()) {
                 deskripsi.visibility = View.GONE
                 date.visibility = View.GONE
                 time.visibility = View.GONE
@@ -36,7 +36,7 @@ class AdapterItem(private val item: List<CartItem>) :
             } else if (item.itemName.isNullOrBlank()) {
                 quantity.visibility = View.GONE
 
-                court.text = item.courtName
+                court.text = item.orderName
                 deskripsi.text = item.description
                 date.text = item.date
                 time.text = item.time

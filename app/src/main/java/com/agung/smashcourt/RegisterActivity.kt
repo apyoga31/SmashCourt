@@ -24,7 +24,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Siapkan opsi role untuk spinner
-        val roles = listOf("Penyedia", "Pelanggan")
+        val roles = listOf("Admin", "Penyedia", "Pelanggan")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, roles)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.roleSpinner.adapter = adapter

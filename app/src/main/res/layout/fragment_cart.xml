@@ -14,65 +14,58 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            app:navigationIcon="@drawable/arrow_back_ios_24dp"
-            app:title="Keranjang"
-            app:titleCentered="true" />
-
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/divider"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:minHeight="?attr/actionBarSize"
+        app:navigationIcon="@drawable/arrow_back_ios_24dp"
+        app:title="Keranjang"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBar" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleCentered="true" />
 
     <TextView
         android:id="@+id/paymentLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/inter_bold"
         android:text="ITEMS"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider" />
+        app:layout_constraintTop_toBottomOf="@+id/topAppBar"/>
 
     <TextView
         android:id="@+id/LabelDeskripsi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/inter_bold"
         android:text="DESCRIPTION"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintStart_toEndOf="@+id/paymentLabel"
+        app:layout_constraintTop_toBottomOf="@+id/topAppBar" />
 
     <TextView
         android:id="@+id/LabelPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
         android:fontFamily="@font/inter_bold"
         android:text="PRICE"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintTop_toBottomOf="@+id/topAppBar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCart"
