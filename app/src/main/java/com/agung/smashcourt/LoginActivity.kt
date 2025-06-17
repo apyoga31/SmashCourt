@@ -26,10 +26,6 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
 
-        binding.forgotPassword.setOnClickListener {
-            startActivity(Intent(this, RepassActivity::class.java))
-        }
-
         binding.loginButton.setOnClickListener {
             val email = binding.emailEditText.editText?.text.toString().trim()
             val password = binding.passwordEditText.editText?.text.toString()
@@ -43,19 +39,25 @@ class LoginActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     val uid = auth.currentUser?.uid
                     if (uid != null) {
-                        // Ambil dokumen berdasarkan UID dari koleksi "users" (huruf kecil sesuai Firebase)
                         firestore.collection("users").document(uid).get()
                             .addOnSuccessListener { document ->
                                 if (document.exists()) {
                                     val role = document.getString("role") ?: "User"
                                     Log.d("LoginDebug", "UID: $uid, Role: $role")
 
-                                    if (role == "Admin") {
-                                        Toast.makeText(this, "Login sebagai Admin", Toast.LENGTH_SHORT).show()
-                                        startActivity(Intent(this, AdminMainActivity::class.java))
-                                    } else {
-                                        Toast.makeText(this, "Login sebagai User", Toast.LENGTH_SHORT).show()
-                                        startActivity(Intent(this, MainActivity::class.java))
+                                    when (role) {
+                                        "Admin" -> {
+                                            Toast.makeText(this, "Login sebagai Admin", Toast.LENGTH_SHORT).show()
+                                            startActivity(Intent(this, AdminMainActivity::class.java))
+                                        }
+                                        "Penyedia" -> {
+                                            Toast.makeText(this, "Login sebagai Penyedia", Toast.LENGTH_SHORT).show()
+                                            startActivity(Intent(this, PenyediaMainActivity::class.java))
+                                        }
+                                        else -> {
+                                            Toast.makeText(this, "Login sebagai User", Toast.LENGTH_SHORT).show()
+                                            startActivity(Intent(this, MainActivity::class.java))
+                                        }
                                     }
                                     finish()
                                 } else {

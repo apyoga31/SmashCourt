@@ -13,6 +13,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".PenyediaMainActivity"
+            android:exported="false" />
+        <activity
             android:name=".DataOrderActivity"
             android:exported="false" />
         <activity
