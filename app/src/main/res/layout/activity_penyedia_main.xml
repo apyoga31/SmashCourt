@@ -128,39 +128,39 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" . "
+                    android:text=" Total Order Lapangan "
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
                     android:gravity="center" />
             </LinearLayout>
 
             <!-- Item 2: Pelanggan -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+<!--            <LinearLayout-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:orientation="vertical"-->
+<!--                android:gravity="center_horizontal">-->
 
-                <TextView
-                    android:id="@+id/info_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text=" "
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    tools:ignore="SpeakableTextPresentCheck" />
+<!--                <TextView-->
+<!--                    android:id="@+id/info_user"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text=" "-->
+<!--                    android:textColor="@android:color/white"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    tools:ignore="SpeakableTextPresentCheck" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" . "
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    android:gravity="center" />
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text=" . "-->
+<!--                    android:textColor="@android:color/white"-->
+<!--                    android:textSize="14sp"-->
+<!--                    android:gravity="center" />-->
+<!--            </LinearLayout>-->
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -189,30 +189,13 @@
                 android:background="#E0E0E0" />
 
             <TextView
-                android:id="@+id/menu_terms"
+                android:id="@+id/menu_kelola_lapangan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/chevron_right_24"
                 android:drawablePadding="8dp"
                 android:padding="16dp"
-                android:text="Lorem ipsum"
-                android:textColor="@color/md_theme_scrim"
-                android:textSize="16sp"
-                android:background="?android:attr/selectableItemBackground" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E0E0E0" />
-
-            <TextView
-                android:id="@+id/menu_privacy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/chevron_right_24"
-                android:drawablePadding="8dp"
-                android:padding="16dp"
-                android:text=" Lorem ipsum"
+                android:text="Kelola Lapangan"
                 android:textColor="@color/md_theme_scrim"
                 android:textSize="16sp"
                 android:background="?android:attr/selectableItemBackground" />

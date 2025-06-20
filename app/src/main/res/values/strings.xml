@@ -13,5 +13,10 @@
     <string name="icon">Ikon</string>
     <string name="page_user">Data Pelanggan</string>
     <string name="page_order">Data Pesanan</string>
+    <string-array name="filter_options">
+        <item>Semua</item>
+        <item>Lunas</item>
+        <item>Belum Lunas</item>
+    </string-array>
 
 </resources>

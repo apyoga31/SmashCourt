@@ -34,6 +34,50 @@
         android:layout_marginTop="12dp"
         android:overScrollMode="never" />
 
+    <!-- Pilihan Lapangan -->
+    <LinearLayout
+        android:id="@+id/layoutSelectCourt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/rvDates"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tvPilihLapangan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pilih Lapangan"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="12dp"/>
+
+        <RadioGroup
+            android:id="@+id/rgLapangan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="12dp">
+
+            <RadioButton
+                android:id="@+id/rbLapangan1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lapangan 1"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/rbLapangan2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lapangan 2"
+                android:layout_marginStart="16dp"/>
+        </RadioGroup>
+    </LinearLayout>
+
     <!-- Label Pilih Jam -->
     <TextView
         android:id="@+id/tvPilihJam"
@@ -43,7 +87,7 @@
         android:text="Pilih Jam"
         android:textStyle="bold"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/rvDates"
+        app:layout_constraintTop_toBottomOf="@id/layoutSelectCourt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"

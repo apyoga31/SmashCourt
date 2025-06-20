@@ -1,5 +1,7 @@
 package com.agung.smashcourt.ui.cart
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -55,7 +57,7 @@ class CartFragment : Fragment() {
                 cartItems.clear()
                 var total = 0
 
-                for ( doc in snapshot.documents) {
+                for (doc in snapshot.documents) {
                     val type = doc.getString("type") ?: "sewa lapangan"
 
                     when (type) {
@@ -93,10 +95,6 @@ class CartFragment : Fragment() {
                             )
                             total += price
                         }
-
-                        else -> {
-                            false
-                        }
                     }
                 }
 
@@ -104,7 +102,6 @@ class CartFragment : Fragment() {
                 binding.textTotalPrice.text = "RP. " + total.toString().replace("\\B(?=(\\d{3})+(?!\\d))".toRegex(), ".")
             }
     }
-
 
     private fun formatDateTimeDesc(timestamp: Timestamp?): Triple<String, String, String> {
         if (timestamp == null) return Triple("-", "-", "-")
@@ -136,10 +133,38 @@ class CartFragment : Fragment() {
             val userId = FirebaseAuth.getInstance().currentUser?.uid
             if (userId != null) {
                 val url = "https://smash-pay.vercel.app/?userId=$userId"
-                val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(url))
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 startActivity(intent)
             }
         }
+    }
+
+    // ✅ Update ke koleksi providers ketika kembali dari pembayaran
+    override fun onResume() {
+        super.onResume()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        if (userId != null) {
+            updatePaidOrdersToProvider(userId)
+        }
+    }
+
+    private fun updatePaidOrdersToProvider(userId: String) {
+        firestore.collection("users").document(userId).collection("orders")
+            .whereEqualTo("isPay", true)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (doc in documents) {
+                    val providerId = doc.getString("providerId") ?: continue
+                    val orderId = doc.id
+
+                    val providerOrderRef = firestore.collection("providers")
+                        .document(providerId)
+                        .collection("orders")
+                        .document(orderId)
+
+                    providerOrderRef.update("isPay", true)
+                }
+            }
     }
 
     override fun onDestroyView() {

@@ -18,7 +18,7 @@ class OrderAdapter(private val orderList: List<Order>) :
         val textPrice: TextView = itemView.findViewById(R.id.textPrice)
         val textQuantity: TextView = itemView.findViewById(R.id.textQuantity)
         val textDate: TextView = itemView.findViewById(R.id.textDate)
-        val textStatus: TextView = itemView.findViewById(R.id.textStatus)
+//        val textStatus: TextView = itemView.findViewById(R.id.textStatus)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
@@ -39,7 +39,7 @@ class OrderAdapter(private val orderList: List<Order>) :
         holder.textType.text = "Tipe: ${order.type}"
         holder.textPrice.text = "Harga: Rp${order.price}"
         holder.textDate.text = "Tanggal: $formattedDate"
-        holder.textStatus.text = if (order.isPay) "Sudah Dibayar" else "Belum Dibayar"
+//        holder.textStatus.text = if (order.isPay) "Sudah Dibayar" else "Belum Dibayar"
 
         // Logika nama + quantity
         if (order.type == "sewa lapangan") {

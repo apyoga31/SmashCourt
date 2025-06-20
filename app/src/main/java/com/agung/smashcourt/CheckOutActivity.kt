@@ -25,13 +25,15 @@ class CheckOutActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        // Ambil data intent
+        // Ambil data dari intent
         val selectedTime = intent.getStringExtra("SELECTED_TIME") ?: "-"
         val selectedDate = intent.getStringExtra("SELECTED_DATE") ?: "-"
-        val selectedCourt = intent.getStringExtra("COURT_NAME") ?: "Not Found"
+        val selectedCourt = intent.getStringExtra("SELECTED_COURT") ?: "-"
+        val courtName = intent.getStringExtra("COURT_NAME") ?: "-"
+        val providerId = intent.getStringExtra("PROVIDER_ID") ?: ""
 
         // Tampilkan detail transaksi
-        binding.transactionDetail.text = "$selectedCourt \n$selectedDate,\n$selectedTime"
+        binding.transactionDetail.text = "$courtName\n$selectedCourt\n$selectedDate, $selectedTime"
 
         startCountdown()
 
@@ -52,19 +54,29 @@ class CheckOutActivity : AppCompatActivity() {
             }
 
             val timestamp = Timestamp(date)
-            val type = if (selectedCourt.lowercase().contains("alat")) "sewa alat" else "sewa lapangan"
+            val type = if (courtName.lowercase().contains("alat")) "sewa alat" else "sewa lapangan"
             val price = 20000
 
             val orderData = hashMapOf(
-                "orderName" to selectedCourt,
+                "orderName" to "$courtName - $selectedCourt",
                 "price" to price,
                 "type" to type,
                 "isPay" to false,
-                "date" to timestamp
+                "date" to timestamp,
+                "providerId" to providerId,
+                "userId" to userId
             )
 
-            FirebaseFirestore.getInstance()
-                .collection("users")
+            val firestore = FirebaseFirestore.getInstance()
+
+            // Simpan ke orders milik provider
+            firestore.collection("providers")
+                .document(providerId)
+                .collection("orders")
+                .add(orderData)
+
+            // Simpan ke orders milik user
+            firestore.collection("users")
                 .document(userId)
                 .collection("orders")
                 .add(orderData)
@@ -76,6 +88,7 @@ class CheckOutActivity : AppCompatActivity() {
                     Toast.makeText(this, "Gagal menambahkan ke keranjang: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
+
     }
 
     private fun startCountdown() {

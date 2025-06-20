@@ -32,6 +32,7 @@ class HomeFragment : Fragment() {
             } else {
                 Intent(requireContext(), BookingActivity::class.java).apply {
                     putExtra("court_name", selectedCourt.name)
+                    putExtra("provider_id", selectedCourt.providerId)
                 }
             }
             startActivity(intent)

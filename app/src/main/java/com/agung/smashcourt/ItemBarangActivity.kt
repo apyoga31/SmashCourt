@@ -25,8 +25,8 @@ class ItemBarangActivity : AppCompatActivity() {
         }
 
         // 🔗 Navigasi ke detail shuttlecock
-        binding.itemShuttlecock.setOnClickListener {
-            startActivity(Intent(this, ProductKokActivity::class.java))
-        }
+//        binding.itemShuttlecock.setOnClickListener {
+//            startActivity(Intent(this, ProductKokActivity::class.java))
+//        }
     }
 }
